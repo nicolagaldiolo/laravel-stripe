@@ -1941,6 +1941,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['plans'],
   data: function data() {
@@ -1949,7 +1954,8 @@ __webpack_require__.r(__webpack_exports__);
       card: null,
       customer: window.App.user.customer_id,
       // A reference to Stripe.js initialized with your real test publishable API key.
-      stripe: Stripe(window.App.stripe_key)
+      stripe: Stripe(window.App.stripe_key),
+      coupon: 'FIRST-COUPON'
     };
   },
   methods: {
@@ -2177,6 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         body: JSON.stringify({
           paymentMethodId: paymentMethodId,
+          coupon: this.coupon,
           priceId: priceId
         })
       }).then(function (response) {
@@ -38638,6 +38645,32 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Coupon Code")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.coupon,
+                    expression: "coupon"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.coupon },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.coupon = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _vm._m(1)
           ]

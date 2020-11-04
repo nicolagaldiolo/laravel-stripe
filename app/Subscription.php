@@ -6,12 +6,15 @@ namespace App;
 
 use App\Models\Plan;
 use App\Models\User;
+use Carbon\Carbon;
+use Hamcrest\Thingy;
 use Illuminate\Support\Facades\Auth;
 
 class Subscription
 {
     protected $user;
     protected $stripe;
+    protected $coupon;
 
     public function __construct(User $user)
     {
@@ -25,7 +28,6 @@ class Subscription
 
         // Create a new customer object
         $customer = $this->stripe->customers->create([
-
             'email' => $this->user->email,
         ]);
 
@@ -36,9 +38,18 @@ class Subscription
         return $customer;
     }
 
-    public function retrieve($id)
+    public function retrieve()
     {
-        return $this->stripe->subscriptions->retrieve($id);
+        return $this->stripe->subscriptions->retrieve($this->user->subscription_id);
+    }
+
+    public function usingCoupon($coupon = false)
+    {
+        if($coupon){
+            $this->coupon = $coupon;
+        }
+
+        return $this;
     }
 
     public function create($paymentMethodId, $priceId)
@@ -66,12 +77,17 @@ class Subscription
                     'price' => $priceId,
                 ],
             ],
+            'coupon' => $this->coupon,
             'expand' => ['latest_invoice.payment_intent'],
         ]);
 
         $this->user->update([
             'subscription_id' => $subscription->id
         ]);
+
+        if($subscription->status === 'active'){
+            $this->user->activate();
+        }
 
         return $subscription;
     }
@@ -96,5 +112,27 @@ class Subscription
         return $this->stripe->invoices->retrieve($invoiceId, [
             'expand' => ['payment_intent'],
         ]);
+    }
+
+    public function cancel($atPeriodEnd = true)
+    {
+        if($atPeriodEnd){
+            $subscription = $this->stripe->subscriptions->update($this->user->subscription_id, [
+                'cancel_at_period_end' => true,
+            ]);
+        }else{
+            $subscription = $this->stripe->subscriptions->retrieve($this->user->subscription_id)->delete();
+        }
+
+        $endDate = Carbon::createFromTimestamp($subscription->current_period_end);
+        $this->user->deactivate($endDate);
+
+        return $subscription;
+
+    }
+
+    public function cancelImmediatly()
+    {
+        return $this->cancel(false);
     }
 }

@@ -19,16 +19,37 @@ class WebhooksController extends Controller
         return response('Webhook received');
     }
 
+    public function handleInvoicePaymentSucceeded($payload)
+    {
+
+        logger($payload);
+
+        $this->retrieveUser($payload)->payments()->create([
+            'amount' => $payload['data']['object']['total'],
+            'invoice' => $payload['data']['object']['id'],
+            'payment_intent' => $payload['data']['object']['payment_intent'],
+        ]);
+    }
+
+    public function handleCustomerSubscriptionCreated($payload)
+    {
+        //dd($payload);
+        //logger($payload);
+    }
+
     public function handleCustomerSubscriptionDeleted($payload)
     {
 
-        User::byStripeId(
-            $payload['data']['object']['customer']
-        )->deactivate();
+        $this->retrieveUser($payload)->deactivate();
     }
 
     public function eventToMethod($event)
     {
         return 'handle' . Str::studly(str_replace('.','_',$event));
+    }
+
+    protected function retrieveUser($payload)
+    {
+        return User::byStripeId($payload['data']['object']['customer']);
     }
 }

@@ -19,6 +19,11 @@
                 <div class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded-md py-3 px-2 leading-tight focus:outline-none focus:bg-white" id="card-element"></div>
                 <div id="card-element-errors" class="text-gray-700 text-base mt-2" role="alert"></div>
               </div>
+
+              <div class="form-group">
+                <label>Coupon Code</label>
+                <input type="text" class="form-control" v-model="coupon">
+              </div>
               <div class="form-group">
                 <button id="submit-premium" class="w-full bg-pasha hover:bg-white hover:shadow-outline hover:text-pasha hover:border hover:border-black focus:shadow-outline text-white focus:bg-white focus:text-pasha font-light py-2 px-4 rounded-md" type="submit">
                   <div id="loading" class="hidden">Subscribing...</div>
@@ -42,7 +47,8 @@
           card: null,
           customer: window.App.user.customer_id,
           // A reference to Stripe.js initialized with your real test publishable API key.
-          stripe: Stripe(window.App.stripe_key)
+          stripe: Stripe(window.App.stripe_key),
+          coupon: 'FIRST-COUPON',
         }
       },
 
@@ -270,6 +276,7 @@
         },
 
         createSubscription({ customerId, paymentMethodId, priceId }) {
+
           return (
               fetch('/create-subscription', {
                 method: 'post',
@@ -279,6 +286,7 @@
                 },
                 body: JSON.stringify({
                   paymentMethodId: paymentMethodId,
+                  coupon: this.coupon,
                   priceId: priceId,
                 }),
               })

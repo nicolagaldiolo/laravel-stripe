@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class SubscriptionsController extends Controller
 {
 
-    public function __construct()
-    {
-        logger('Invocato server');
-    }
-
     public function createCustomer()
     {
         try {
@@ -35,7 +30,7 @@ class SubscriptionsController extends Controller
 
         try {
 
-            $subscription = Auth::user()->subscription()->create($paymentMethodId, $priceId);
+            $subscription = Auth::user()->subscription()->usingCoupon(\request()->get('coupon'))->create($paymentMethodId, $priceId);
 
             return response($subscription);
 
@@ -66,5 +61,12 @@ class SubscriptionsController extends Controller
             ], 422);
         }
 
+    }
+
+    public function destroy()
+    {
+        Auth::user()->subscription()->cancel();
+
+        return redirect()->back();
     }
 }
