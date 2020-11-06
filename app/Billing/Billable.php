@@ -24,6 +24,20 @@ trait Billable
         return !! $this->subscription_active;
     }
 
+    public function isActive()
+    {
+        return $this->isSubscribed() || $this->isOnGracePeriod();
+    }
+
+    public function isOnGracePeriod()
+    {
+        if(!$endsAt = $this->subscription_end_at){
+            return false;
+        }
+
+        return Carbon::now()->lt($endsAt);
+    }
+
     public function deactivate($endDate = null)
     {
 

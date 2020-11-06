@@ -266,13 +266,7 @@
 
         onSubscriptionComplete(result) {
           alert('Apposto');
-          // Payment was successful. Provision access to your service.
-          // Remove invoice from localstorage because payment is now complete.
-          this.clearCache();
-          // Change your UI to show a success message to your customer.
-          // Call your backend to grant access to your service based on
-          // the product your customer subscribed to.
-          // Get the product by using result.subscription.price.product
+          location.reload();
         },
 
         createSubscription({ customerId, paymentMethodId, priceId }) {

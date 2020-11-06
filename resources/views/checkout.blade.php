@@ -24,13 +24,43 @@
 <body>
     <div class="container">
 
-        @unless(\Illuminate\Support\Facades\Auth::user()->isSubscribed())
+        @if(auth()->user()->isActive())
+            @if(auth()->user()->isOnGracePeriod())
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3>Periodo di grazia</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/subscription" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <label>La tua subscription scadrà il {{ \Illuminate\Support\Facades\Auth::user()->subscription_end_at->format('d-m-Y') }}</label>
+                            <br>
+                            <button class="btn btn-primary" type="submit">Riattiva subscription</button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3>Cancella</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/subscription" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">Cancella subscription</button>
+                        </form>
+                    </div>
+                </div>
+            @endif
+        @else
             <div id="app">
                 <checkout-form :plans="{{ \App\Models\Plan::all() }}"></checkout-form>
             </div>
-        @endunless
+        @endif
 
-        @if(\Illuminate\Support\Facades\Auth::user()->isSubscribed())
+        @if(count(auth()->user()->payments) > 0)
             <div class="card mt-4">
                 <div class="card-header">
                     <h3>Pagamenti</h3>
@@ -43,19 +73,6 @@
                         </li>
                     @endforeach
                 </ul>
-            </div>
-
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h3>Cancella</h3>
-                </div>
-                <div class="card-body">
-                    <form action="/subscription" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger" type="submit">Cancella subscription</button>
-                    </form>
-                </div>
             </div>
         @endif
     </div>

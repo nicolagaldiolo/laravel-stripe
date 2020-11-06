@@ -34,7 +34,7 @@ class SubscriptionTest extends TestCase
             'subscription_active' => false
         ]);
 
-        $this->assertTrue($user->fresh()->isSubscribed());
+        $this->assertTrue($user->fresh()->isActive());
 
         // Recupero la subscription da stripe, se non esiste viene sollevata un eccezzione
         try{
@@ -42,6 +42,8 @@ class SubscriptionTest extends TestCase
         }catch (\Exception $e){
             $this->fail($e->getMessage());
         }
+
+        $this->cleanCustomer($user);
     }
 
     public function testItSubscribesAUserUsingAcouponCode()
@@ -57,6 +59,8 @@ class SubscriptionTest extends TestCase
 
         $this->assertEquals($couponCode, $subscription->latest_invoice->discount->coupon->id);
 
+        $this->cleanCustomer($user);
+
     }
 
     public function testItCancelsAUsersSubscription()
@@ -70,6 +74,27 @@ class SubscriptionTest extends TestCase
         $this->assertNotNull($stripeSubscription->canceled_at);
         $this->assertFalse($user->isSubscribed());
         $this->assertNotNull($user->subscription_end_at);
+        $this->assertTrue($user->isActive());
+
+        $this->cleanCustomer($user);
+    }
+
+    public function testItResumesASubscription()
+    {
+
+        $user = $this->makeSubscribedUser();
+
+        $user->subscription()->cancel();
+
+        $this->assertTrue($user->isActive());
+        $this->assertTrue($user->isOnGracePeriod());
+
+        $user->subscription()->resume();
+
+        $this->assertTrue($user->isSubscribed());
+        $this->assertFalse($user->isOnGracePeriod());
+
+        $this->cleanCustomer($user);
 
     }
 
@@ -82,5 +107,10 @@ class SubscriptionTest extends TestCase
         $user->subscription()->create($this->getPaymentMethod(), $this->getPlan());
 
         return $user;
+    }
+
+    protected function cleanCustomer($user)
+    {
+        $user->subscription()->deleteCustomer();
     }
 }

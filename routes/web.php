@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/create-subscription', [App\Http\Controllers\SubscriptionsController::class, 'createSubscription']);
     Route::delete('/subscription', [App\Http\Controllers\SubscriptionsController::class, 'destroy']);
+    Route::patch('/subscription', [App\Http\Controllers\SubscriptionsController::class, 'resume']);
     Route::post('/create-customer', [App\Http\Controllers\SubscriptionsController::class, 'createCustomer']);
     Route::post('/retry-invoice', [App\Http\Controllers\SubscriptionsController::class, 'retryInvoice']);
 });

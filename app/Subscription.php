@@ -38,6 +38,11 @@ class Subscription
         return $customer;
     }
 
+    public function deleteCustomer()
+    {
+        $this->stripe->customers->delete($this->user->customer_id);
+    }
+
     public function retrieve()
     {
         return $this->stripe->subscriptions->retrieve($this->user->subscription_id);
@@ -134,5 +139,14 @@ class Subscription
     public function cancelImmediatly()
     {
         return $this->cancel(false);
+    }
+
+    public function resume()
+    {
+        $this->stripe->subscriptions->update($this->user->subscription_id, [
+            'cancel_at_period_end' => false,
+        ]);
+
+        $this->user->activate();
     }
 }

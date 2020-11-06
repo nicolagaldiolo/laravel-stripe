@@ -63,6 +63,13 @@ class SubscriptionsController extends Controller
 
     }
 
+    public function resume()
+    {
+        Auth::user()->subscription()->resume();
+
+        return redirect()->back();
+    }
+
     public function destroy()
     {
         Auth::user()->subscription()->cancel();

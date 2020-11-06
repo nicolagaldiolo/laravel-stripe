@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9663e23f-c23d-4d50-a461-30e96d959ea6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Billing/Billable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Billing/Billable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SubscriptionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SubscriptionsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WebhooksController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WebhooksController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/CheckoutForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CheckoutForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/checkout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/checkout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/SubscriptionTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/WebhooksControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/WebhooksControllerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +172,11 @@
       <recent name="$PROJECT_DIR$/resources/views/stripecheckout-built-in" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.SubscriptionTest.testItSubscribesAUserUsingAcouponCode">
+  <component name="RunManager" selected="PHPUnit.SubscriptionTest.testItResumesASubscription">
+    <configuration name="BillableTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\BillableTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/BillableTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
     <configuration name="SubscriptionTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\SubscriptionTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" scope="Class" />
       <method v="2" />
@@ -181,16 +185,12 @@
       <TestRunner class="Tests\Feature\SubscriptionTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" method="testItCancelsAUsersSubscription" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="SubscriptionTest.testItSubscribesAUserUsingAcouponCode" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SubscriptionTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" method="testItSubscribesAUserUsingAcouponCode" scope="Method" />
+    <configuration name="SubscriptionTest.testItResumesASubscription" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\SubscriptionTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" method="testItResumesASubscription" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="SubscriptionTest.testSubscribesAUser" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\SubscriptionTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/SubscriptionTest.php" method="testSubscribesAUser" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="WebhooksControllerTest.testItDeactivatesAUsersSubscriptionIfDeletedOnStripesEnd" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\WebhooksControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/WebhooksControllerTest.php" method="testItDeactivatesAUsersSubscriptionIfDeletedOnStripesEnd" scope="Method" />
+    <configuration name="WebhooksControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\WebhooksControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/WebhooksControllerTest.php" scope="Class" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -204,11 +204,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.SubscriptionTest.testItSubscribesAUserUsingAcouponCode" />
+        <item itemvalue="PHPUnit.SubscriptionTest.testItResumesASubscription" />
         <item itemvalue="PHPUnit.SubscriptionTest.testItCancelsAUsersSubscription" />
-        <item itemvalue="PHPUnit.SubscriptionTest.testSubscribesAUser" />
         <item itemvalue="PHPUnit.SubscriptionTest" />
-        <item itemvalue="PHPUnit.WebhooksControllerTest.testItDeactivatesAUsersSubscriptionIfDeletedOnStripesEnd" />
+        <item itemvalue="PHPUnit.WebhooksControllerTest" />
+        <item itemvalue="PHPUnit.BillableTest" />
       </list>
     </recent_temporary>
   </component>
@@ -227,7 +227,8 @@
       <workItem from="1603461434625" duration="24575000" />
       <workItem from="1603861827306" duration="2159000" />
       <workItem from="1604130347357" duration="20962000" />
-      <workItem from="1604494943264" duration="14601000" />
+      <workItem from="1604494943264" duration="14711000" />
+      <workItem from="1604557188166" duration="12912000" />
     </task>
     <servers />
   </component>
@@ -252,25 +253,25 @@
     </state>
     <state x="458" y="223" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604504777819" />
     <state x="458" y="223" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1440.877@0.23.1440.877" timestamp="1604159720182" />
-    <state width="1398" height="97" key="GridCell.Tab.0.bottom" timestamp="1604511391308">
+    <state width="1398" height="218" key="GridCell.Tab.0.bottom" timestamp="1604682667506">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="97" key="GridCell.Tab.0.bottom/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604511391308" />
+    <state width="1398" height="218" key="GridCell.Tab.0.bottom/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604682667506" />
     <state width="1398" height="272" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1604159788175" />
-    <state width="1398" height="97" key="GridCell.Tab.0.center" timestamp="1604511391307">
+    <state width="1398" height="218" key="GridCell.Tab.0.center" timestamp="1604682667504">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="97" key="GridCell.Tab.0.center/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604511391307" />
+    <state width="1398" height="218" key="GridCell.Tab.0.center/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604682667504" />
     <state width="1398" height="272" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1604159788174" />
-    <state width="1398" height="97" key="GridCell.Tab.0.left" timestamp="1604511391307">
+    <state width="1398" height="218" key="GridCell.Tab.0.left" timestamp="1604682667504">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="97" key="GridCell.Tab.0.left/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604511391307" />
+    <state width="1398" height="218" key="GridCell.Tab.0.left/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604682667504" />
     <state width="1398" height="272" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1604159788173" />
-    <state width="1398" height="97" key="GridCell.Tab.0.right" timestamp="1604511391307">
+    <state width="1398" height="218" key="GridCell.Tab.0.right" timestamp="1604682667505">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="97" key="GridCell.Tab.0.right/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604511391307" />
+    <state width="1398" height="218" key="GridCell.Tab.0.right/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604682667505" />
     <state width="1398" height="272" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1604159788174" />
     <state x="501" y="195" key="NewPhpClassDialog" timestamp="1604159660969">
       <screen x="0" y="23" width="1440" height="877" />
@@ -280,6 +281,10 @@
       <screen x="-2560" y="-287" width="2560" height="1417" />
     </state>
     <state width="506" height="445" key="SwitcherDM/0.23.1440.877/-4000.458.1440.877/-2560.-287.2560.1417@-2560.-287.2560.1417" timestamp="1603464608200" />
+    <state x="532" y="384" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604682546904">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="532" y="384" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877/-489.-1417.2560.1417/-1929.-672.1440.877@0.23.1440.877" timestamp="1604682546904" />
     <state x="421" y="223" width="598" height="476" key="find.popup" timestamp="1603862155095">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
